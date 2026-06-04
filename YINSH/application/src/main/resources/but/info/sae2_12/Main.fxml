@@ -21,7 +21,7 @@
     </top>
     
     <center>
-    	<fx:include fx:id="board" source="Board.fxml">
+    	<fx:include fx:id="board" source="Board.fxml"/>
     </center>
     
     

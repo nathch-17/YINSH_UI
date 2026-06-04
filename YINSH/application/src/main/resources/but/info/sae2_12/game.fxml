@@ -17,7 +17,7 @@
 
 <?import java.lang.String?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
-      disable="true"
+      
       fx:controller="but.info.sae2_12.controllers.GameController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -40,7 +40,7 @@
                         <Font size="14.0" />
                      </font>
                   </CheckBox>
-                  <VBox fx:id="vboxTypeTeam" prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="vboxTypeTeam" prefHeight="200.0" prefWidth="100.0" disable="true">
                      <children>
                         <Label text="Type : ">
                            <font>
