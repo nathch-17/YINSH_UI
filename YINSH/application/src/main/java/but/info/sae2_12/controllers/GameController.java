@@ -70,12 +70,7 @@ public class GameController {
     }
 
     public void initialize(){
-        radioPion.setUserData("Pawn");
-        radioRing.setUserData("Ring");
-        radioBlack.setUserData("BLACK");
-        radioWhite.setUserData("WHITE");
-
-       chkEditMode.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+        chkEditMode.selectedProperty().addListener(((observable, oldValue, newValue) -> {
            vboxTypeTeam.setDisable(!newValue);
        }));
 

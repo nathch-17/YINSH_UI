@@ -15,7 +15,10 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="but.info.sae2_12.controllers.GameController">
+<?import java.lang.String?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1"
+      disable="true"
+      fx:controller="but.info.sae2_12.controllers.GameController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
@@ -37,7 +40,7 @@
                         <Font size="14.0" />
                      </font>
                   </CheckBox>
-                  <VBox id="vboxTypeTeam" prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="vboxTypeTeam" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <Label text="Type : ">
                            <font>
@@ -48,6 +51,7 @@
                            </padding>
                         </Label>
                         <RadioButton fx:id="radioPion" mnemonicParsing="false" selected="true" text="Pion">
+                           <userData><String fx:value="Pawn"/></userData>
                            <toggleGroup>
                               <ToggleGroup fx:id="typeToggleGroup" />
                            </toggleGroup>
@@ -59,6 +63,7 @@
                            </padding>
                         </RadioButton>
                         <RadioButton fx:id="radioRing" mnemonicParsing="false" text="Anneau" toggleGroup="$typeToggleGroup">
+                           <userData><String fx:value="Ring"/></userData>
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
@@ -72,6 +77,7 @@
                            </padding>
                         </Label>
                         <RadioButton fx:id="radioBlack" mnemonicParsing="false" selected="true" text="Noir">
+                           <userData><String fx:value="Black"/></userData>
                            <toggleGroup>
                               <ToggleGroup fx:id="teamToggleGroup" />
                            </toggleGroup>
@@ -83,6 +89,7 @@
                            </padding>
                         </RadioButton>
                         <RadioButton fx:id="radioWhite" mnemonicParsing="false" text="Blanc" toggleGroup="$teamToggleGroup">
+                           <userData><String fx:value="White"/></userData>
                            <padding>
                               <Insets bottom="2.0" left="20.0" top="2.0" />
                            </padding>
