@@ -32,27 +32,18 @@ public class MainController {
 
 	public void initialize() {
 		IFactory factory = new FactoryDoubled();
-		this.model = new Model(factory.emptyState());   // plateau vide
+		this.model = new Model(factory.emptyGame());   // partie prête : anneaux placés, plateau vide
+
 		boardController.setMainController(this);
 
+		// Le mode courant se calcule tout seul : édition > suppression de ligne > jeu.
 		currentMode.bind(Bindings.createObjectBinding(
 				this::computeMode,
 				editionMode,
 				model.stateProperty()
 		));
-	// construit le terrain + branche le listener
-
-		// On place une ligne de 5 pions blancs alignés + un anneau blanc, pour tester.
-		model.toggleToken(new CoordinateDoubled(4, 0), Pawn.class, Team.WHITE);
-		model.toggleToken(new CoordinateDoubled(4, 2), Pawn.class, Team.WHITE);
-		model.toggleToken(new CoordinateDoubled(4, 4), Pawn.class, Team.WHITE);
-		model.toggleToken(new CoordinateDoubled(4, 6), Pawn.class, Team.WHITE);
-		model.toggleToken(new CoordinateDoubled(4, 8), Pawn.class, Team.WHITE);
-		model.toggleToken(new CoordinateDoubled(4, 10), Ring.class, Team.WHITE);
-		// test provisoire
-
-		System.out.println("Nombre de lignes détectées : " + model.getPawnsLines().size());
 	}
+	
 
 	public Model getModel() {
 		return model;
