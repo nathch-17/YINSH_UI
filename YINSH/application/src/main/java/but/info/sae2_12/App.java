@@ -8,17 +8,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/**
- * JavaFX App
- * https://www.redblobgames.com/grids/hexagons/
- */
 public class App extends Application {
 
     private static Scene scene;
-    public static String mode;
+
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("Main"), 640, 480);
+        scene = new Scene(loadFXML("Main"), 900, 750); // un peu plus grand pour voir tout le plateau
+        stage.setTitle("YINSH");
         stage.setScene(scene);
         stage.show();
     }
@@ -35,5 +32,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }
