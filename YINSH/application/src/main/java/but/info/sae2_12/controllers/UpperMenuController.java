@@ -14,6 +14,10 @@ import coordinates.CoordinateCube;
 import javafx.stage.FileChooser;
 import java.io.*;
 import java.util.Map;
+import but.info.sae2_12.model.Team;
+import but.info.sae2_12.model.state.State;
+import but.info.sae2_12.model.tokens.Pawn;
+import java.util.*;
 
 public class UpperMenuController {
 
@@ -86,7 +90,52 @@ public class UpperMenuController {
     }
 
     @FXML
-    private void onCharger(ActionEvent event) {}
+    private void onCharger(ActionEvent event) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Charger une partie");
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers YINSH (*.yns)", "*.yns"));
+        File fichier = fc.showOpenDialog(mainController.getWindow());
+        if (fichier == null) return;
+
+        try (Scanner in = new Scanner(fichier)) {
+            if (!in.nextLine().equals(MAGIC)) {
+                afficherErreur("Format de fichier invalide");
+            } else {
+                Team turn = Team.valueOf(in.nextLine());
+                boolean hasLines = in.nextLine().equals("true");
+
+                Map<Coordinate, Token> board = new HashMap<>();
+                for (Coordinate c : mainController.getState().board().keySet())
+                    board.put(c, null);
+
+                while (in.hasNextLine()) {
+                    String[] parts = in.nextLine().split(" ");
+                    Coordinate coord = new CoordinateCube(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+                    Team team = Team.valueOf(parts[4]);
+
+                    Token token;
+                    if (parts[3].equals("R")) {
+                        token = new Ring(team);
+                    } else {
+                        token = new Pawn(team);
+                    }
+
+                    board.put(coord, token);
+                }
+
+                List<Set<Coordinate>> lines;
+                if (hasLines) {
+                    lines = IState.getPawnsLines(board);
+                } else {
+                    lines = new ArrayList<>();
+                }
+
+                mainController.setState(new State(board, turn, lines));
+            }
+        } catch (IOException e) {
+            afficherErreur("Erreur lors du chargement.");
+        }
+    }
     
     
     private void afficherErreur(String message) {
