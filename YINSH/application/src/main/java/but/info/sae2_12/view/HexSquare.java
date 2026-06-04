@@ -1,5 +1,6 @@
 package but.info.sae2_12.view;
 
+import but.info.sae2_12.controllers.MainController;
 import but.info.sae2_12.model.Team;
 import but.info.sae2_12.model.tokens.Pawn;
 import but.info.sae2_12.model.tokens.Ring;
@@ -20,22 +21,22 @@ public class HexSquare extends Polygon {
     public static final double HAUTEUR = 46;
     public static final double MARGE = 40;
 
-    /** La coordonnée (du modèle) représentée par cette case. */
     private final Coordinate coordinate;
 
-    /** Le Pane central sur lequel on ajoute/retire les formes. */
     private final Pane pane;
 
-    /** Centre de l'hexagone en pixels (calculé une seule fois). */
     private final double centreX;
     private final double centreY;
 
-    /** Forme actuellement posée sur la case : pion, anneau, marqueur ou null. */
     private Shape form;
 
-    public HexSquare(Coordinate coordinate, Pane pane) {
+    private final MainController mainController;
+    private Color baseColor = Color.LIGHTGRAY;
+
+    public HexSquare(Coordinate coordinate, Pane pane, MainController mainController) {
         this.coordinate = coordinate;
         this.pane = pane;
+        this.mainController = mainController;
 
         // Position du centre en pixels.
         Point point = coordinate.to2DCoordinate();
@@ -55,6 +56,41 @@ public class HexSquare extends Polygon {
         setFill(Color.LIGHTGRAY);
         setStroke(Color.BLACK);
         setStrokeWidth(1);
+
+        setFill(baseColor);
+        setStroke(Color.BLACK);
+        setStrokeWidth(1);
+
+        setOnMouseClicked(event -> {
+            if (mainController.getCurrentMode() != null) {
+                mainController.getCurrentMode().handleClick(event, this);
+            }
+        });
+        setOnMouseEntered(event -> {
+            if (mainController.getCurrentMode() != null) {
+                mainController.getCurrentMode().entered(event, this);
+            }
+        });
+        setOnMouseExited(event -> {
+            if (mainController.getCurrentMode() != null) {
+                mainController.getCurrentMode().exited(event, this);
+            }
+        });
+    }
+
+    /** la case prend une couleur différente qund on hover */
+    public void hover() {
+        setFill(baseColor.darker());
+    }
+
+    /** fin du survol : retour à la couleur de base. */
+    public void resetColor() {
+        setFill(baseColor);
+    }
+
+    public void setBaseColor(Color color) {
+        this.baseColor = color;
+        setFill(color);
     }
 
     /**
@@ -83,7 +119,7 @@ public class HexSquare extends Polygon {
         }
     }
 
-    /** Disque plein représentant un pion. */
+    /** pion. */
     private Shape createPawn(Team team) {
         Circle c = new Circle(centreX, centreY, LARGEUR / 4);
         c.setFill(team.getColor());
@@ -92,7 +128,7 @@ public class HexSquare extends Polygon {
         return c;
     }
 
-    /** Cercle évidé représentant un anneau. */
+    /** anneau. */
     private Shape createRing(Team team) {
         Circle c = new Circle(centreX, centreY, LARGEUR / 3);
         c.setFill(Color.TRANSPARENT);     // anneau

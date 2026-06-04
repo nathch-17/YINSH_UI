@@ -26,16 +26,32 @@ public class BoardControllers {
 
     }
 
-    public void setMainController(MainController mainController){
+    public void setMainController(MainController mainController) {
         this.mainController = mainController;
         creerTerrain();
+
+        // À chaque changement d'état du modèle, on redessine les jetons.
+        mainController.getModel().stateProperty().addListener((obs, ancien, nouveau) -> refresh());
+    }
+
+    /** Redessine le contenu de chaque case d'après le modèle. */
+    private void refresh() {
+        Map<Coordinate, Token> board = mainController.getModel().getBoard();
+        for (Coordinate c : cases.keySet()) {
+            cases.get(c).setToken(board.get(c));
+        }
+    }
+
+    /** Permet aux modes de récupérer la case d'une coordonnée. */
+    public HexSquare getCase(Coordinate c) {
+        return cases.get(c);
     }
 
     private void creerTerrain() {
         Map<Coordinate, Token> board = mainController.getModel().getBoard();
 
         for (Coordinate c : board.keySet()) {
-            HexSquare hex = new HexSquare(c, boardPane);
+            HexSquare hex = new HexSquare(c, boardPane, mainController);
             boardPane.getChildren().add(hex);
             hex.setToken(board.get(c));
             cases.put(c, hex);
