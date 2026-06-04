@@ -52,9 +52,9 @@ public class GameController {
         this.mainController = mc;
         this.factory=new FactoryDoubled();
         mainController.showCoordinatesProperty().bind(chkShowCoordinates.selectedProperty());
-        listViewCoordinateMode.getItems().addAll(CoordinateDisplayMode.values());
-        listViewCoordinateMode.getSelectionModel().select(CoordinateDisplayMode.DOUBLED);
-        mainController.coordinateModeProperty().bind(listViewCoordinateMode.getSelectionModel().selectedItemProperty());
+
+        chkEditMode.selectedProperty().bindBidirectional(mc.editionModeProperty());
+        sliderBorderThickness.valueProperty().bindBidirectional(mc.borderThicknessProperty());
 
         mainController.showCoordinatesProperty().addListener((obs, ancien, nouveau) ->
                 System.out.println("showCoordinates = " + nouveau));
@@ -109,14 +109,6 @@ public class GameController {
         return radioRing.isSelected();
     }
 
-    public void setMainController(MainController mc){
-        this.mainController = mc;
-        this.factory=new FactoryDoubled();
-
-
-        chkEditMode.selectedProperty().bindBidirectional(mc.editionModeProperty());
-        sliderBorderThickness.valueProperty().bindBidirectional(mc.borderThicknessProperty());
-    }
 
 
 
