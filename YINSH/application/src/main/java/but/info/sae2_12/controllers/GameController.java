@@ -1,5 +1,6 @@
 package but.info.sae2_12.controllers;
 
+import but.info.sae2_12.CoordinateDisplayMode;
 import but.info.sae2_12.model.factory.FactoryDoubled;
 import but.info.sae2_12.model.factory.IFactory;
 import but.info.sae2_12.model.state.IState;
@@ -36,7 +37,7 @@ public class GameController {
 
 
     @FXML private CheckBox chkShowCoordinates;
-    @FXML private ListView<String> listViewCoordinateMode;
+    @FXML private ListView<CoordinateDisplayMode> listViewCoordinateMode;
 
 
     @FXML private Slider sliderBorderThickness;
@@ -45,6 +46,13 @@ public class GameController {
     public void setMainController(MainController mc){
         this.mainController = mc;
         this.factory=new FactoryDoubled();
+        mainController.showCoordinatesProperty().bind(chkShowCoordinates.selectedProperty());
+        listViewCoordinateMode.getItems().addAll(CoordinateDisplayMode.values());
+        listViewCoordinateMode.getSelectionModel().select(CoordinateDisplayMode.DOUBLED);
+        mainController.coordinateModeProperty().bind(listViewCoordinateMode.getSelectionModel().selectedItemProperty());
+
+        mainController.showCoordinatesProperty().addListener((obs, ancien, nouveau) ->
+                System.out.println("showCoordinates = " + nouveau));
     }
 
     @FXML public void handleNewGame(){

@@ -3,11 +3,8 @@ package but.info.sae2_12.controllers;
 import but.info.sae2_12.model.tokens.Token;
 import but.info.sae2_12.view.HexSquare;
 import coordinates.Coordinate;
-import coordinates.CoordinateDoubled;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;   // <-- nouvel import
-import javafx.scene.shape.Circle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,8 +27,8 @@ public class BoardControllers {
         this.mainController = mainController;
         creerTerrain();
 
-        // À chaque changement d'état du modèle, on redessine les jetons.
         mainController.getModel().stateProperty().addListener((obs, ancien, nouveau) -> refresh());
+
     }
 
     /** Redessine le contenu de chaque case d'après le modèle. */
@@ -52,7 +49,6 @@ public class BoardControllers {
 
         for (Coordinate c : board.keySet()) {
             HexSquare hex = new HexSquare(c, boardPane, mainController);
-            boardPane.getChildren().add(hex);
             hex.setToken(board.get(c));
             cases.put(c, hex);
         }

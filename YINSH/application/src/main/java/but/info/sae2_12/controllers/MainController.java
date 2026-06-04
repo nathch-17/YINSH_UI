@@ -1,5 +1,6 @@
 package but.info.sae2_12.controllers;
 
+import but.info.sae2_12.CoordinateDisplayMode;
 import but.info.sae2_12.mode.EditionMode;
 import but.info.sae2_12.mode.GameMode;
 import but.info.sae2_12.mode.InteractionMode;
@@ -8,6 +9,7 @@ import but.info.sae2_12.model.Model;
 import but.info.sae2_12.model.Team;
 import but.info.sae2_12.model.factory.FactoryDoubled;
 import but.info.sae2_12.model.state.State;
+import coordinates.Coordinate;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -32,6 +34,10 @@ public class MainController {
     private final ObjectProperty<InteractionMode> currentMode = new SimpleObjectProperty<>();
     private final BooleanProperty editionMode = new SimpleBooleanProperty(false);
     private final BooleanProperty hasWinner = new SimpleBooleanProperty(false);
+    private final BooleanProperty shwoCoordinates = new SimpleBooleanProperty(false);
+    private final ObjectProperty<CoordinateDisplayMode> coordinateMode = new SimpleObjectProperty<>(CoordinateDisplayMode.DOUBLED);
+    private final BooleanProperty showCoordinates = new SimpleBooleanProperty(false);
+    public ObjectProperty<CoordinateDisplayMode> coordinateModeProperty() { return coordinateMode; }
 
     public void initialize() {
         setModel(new Model(new FactoryDoubled().emptyGame()));
@@ -97,4 +103,5 @@ public class MainController {
         if (root != null && root.getScene() != null) return root.getScene().getWindow();
         return null;
     }
+    public BooleanProperty showCoordinatesProperty() { return showCoordinates; }
 }

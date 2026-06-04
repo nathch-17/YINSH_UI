@@ -7,6 +7,7 @@ import but.info.sae2_12.model.tokens.Ring;
 import but.info.sae2_12.model.tokens.Token;
 import coordinates.Coordinate;
 import coordinates.Point;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -24,6 +25,7 @@ public class HexSquare extends Polygon {
     private final Coordinate coordinate;
 
     private final Pane pane;
+    private final Label label;
 
     private final double centreX;
     private final double centreY;
@@ -38,10 +40,13 @@ public class HexSquare extends Polygon {
         this.pane = pane;
         this.mainController = mainController;
 
+
+
         // Position du centre en pixels.
         Point point = coordinate.to2DCoordinate();
         this.centreX = point.x() * (LARGEUR / 2.0) + MARGE;
         this.centreY = point.y() * (3.0 * HAUTEUR / 4.0) + MARGE;
+
 
         // Les 6 sommets autour du centre.
         getPoints().addAll(
@@ -76,6 +81,15 @@ public class HexSquare extends Polygon {
                 mainController.getCurrentMode().exited(event, this);
             }
         });
+
+
+        this.label = new Label(coordinate.toString());     // le texte
+        this.label.setLayoutX(centreX - 10);       // placé ~au centre de la case
+        this.label.setLayoutY(centreY - 8);
+        this.label.setMouseTransparent(true);               // le clic traverse vers l'hexagone
+        this.label.visibleProperty().bind(mainController.showCoordinatesProperty());
+        pane.getChildren().add(this);
+        pane.getChildren().add(label);
     }
 
     /** la case prend une couleur différente qund on hover */
@@ -152,5 +166,9 @@ public class HexSquare extends Polygon {
 
     public Shape getForm() {
         return form;
+    }
+
+    public Label getLabel(){
+        return label;
     }
 }
