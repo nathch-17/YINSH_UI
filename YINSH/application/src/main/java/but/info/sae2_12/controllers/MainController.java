@@ -1,7 +1,9 @@
 package but.info.sae2_12.controllers;
 
+import but.info.sae2_12.mode.EditionMode;
 import but.info.sae2_12.mode.GameMode;
 import but.info.sae2_12.mode.InteractionMode;
+import but.info.sae2_12.mode.RemoveLineMode;
 import but.info.sae2_12.model.Model;
 import but.info.sae2_12.model.factory.FactoryDoubled;
 import but.info.sae2_12.model.factory.IFactory;
@@ -23,11 +25,12 @@ public class MainController {
 
 	public void initialize(){
 		IFactory factory = new FactoryDoubled();
-		this.model = new Model(factory.testState());
-
+		IState base = factory.doubleLineStateTest();   // un plateau qui contient des lignes
+// On recrée l'état en y stockant les lignes calculées (sinon removeLine refuse) :
+		this.model = new Model(new State(base.board(), base.turn(), IState.getPawnsLines(base.board())));
 		boardController.setMainController(this);
-		// TEST PROVISOIRE : à retirer une fois le binding du 3.1.2 en place.
-		currentMode.set(new GameMode(this));
+		currentMode.set(new RemoveLineMode(this));   // test provisoire
+
 	}
 
 	public Model getModel() {
@@ -54,12 +57,11 @@ public class MainController {
 
 	private final ObjectProperty<InteractionMode> currentMode = new SimpleObjectProperty<>();
 
-	/** @return le mode courant (utilisé par HexSquare). */
+	/** donne le mode actuel */
 	public InteractionMode getCurrentMode() {
 		return currentMode.get();
 	}
 
-	/** La propriété, pour pouvoir y attacher des listeners / bindings (3.1.2). */
 	public ObjectProperty<InteractionMode> currentModeProperty() {
 		return currentMode;
 	}
