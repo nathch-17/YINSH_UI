@@ -5,6 +5,7 @@ import but.info.sae2_12.AI.MinimaxAI;
 import but.info.sae2_12.model.Team;
 import but.info.sae2_12.model.actions.Action;
 import but.info.sae2_12.model.state.IState;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
