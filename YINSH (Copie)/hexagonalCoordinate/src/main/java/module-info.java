@@ -1,3 +1,0 @@
-module HexagonalCoordinate {
-    exports coordinates;
-}
