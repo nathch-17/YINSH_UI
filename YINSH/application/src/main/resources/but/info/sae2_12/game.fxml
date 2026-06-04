@@ -15,15 +15,14 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="but.info.sae2_12.controllers.game_controller">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <Button fx:id="btnNewGame" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Nouvelle partie" />
-            <Button fx:id="btnState1" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="State1" />
-            <Button fx:id="btnState2" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="State2" />
-            <Button fx:id="btnState3" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="State3" />
+            <Button fx:id="btnNewGame" mnemonicParsing="false" onAction="#handleNewGame" prefHeight="30.0" prefWidth="100.0" text="Nouvelle partie" />
+            <Button fx:id="btnState1" mnemonicParsing="false" onAction="#handleState1" prefHeight="30.0" prefWidth="100.0" text="State1" />
+            <Button fx:id="btnState2" mnemonicParsing="false" onAction="#handleState2" prefHeight="30.0" prefWidth="100.0" text="State2" />
+            <Button fx:id="btnState3" mnemonicParsing="false" onAction="#handleState3" prefHeight="30.0" prefWidth="100.0" text="State3" />
          </children>
          <padding>
             <Insets bottom="10.0" />

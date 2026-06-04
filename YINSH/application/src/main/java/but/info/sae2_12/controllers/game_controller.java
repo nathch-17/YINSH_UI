@@ -1,9 +1,25 @@
 package but.info.sae2_12.controllers;
 
+import but.info.sae2_12.model.factory.AbstractFactory;
+import but.info.sae2_12.model.factory.FactoryCube;
+import but.info.sae2_12.model.factory.FactoryDoubled;
+import but.info.sae2_12.model.factory.IFactory;
+import but.info.sae2_12.model.state.IState;
+import but.info.sae2_12.model.state.State;
+import but.info.sae2_12.model.tokens.Token;
+import coordinates.Coordinate;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class game_controller {
+    private IFactory factory;
+    private IState state;
 
     @FXML
     private Button btnNewGame;
@@ -31,7 +47,22 @@ public class game_controller {
 
 
     @FXML private Slider sliderBorderThickness;
-    
+
+    @FXML public void handleNewGame(){
+
+    }
+
+    @FXML public void handleState1(){
+
+
+    }
+
+    @FXML public void handleState2(){
+
+    }
+
+    @FXML public void handleState3(){}
+
 
 
 }
