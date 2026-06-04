@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="but.info.sae2_12.controllers.MainController">
-  <center>
-    <fx:include fx:id="board" source="Board.fxml"/>
-  </center>
-</BorderPane>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="400.0" prefWidth="640.0"
+
+		xmlns="http://javafx.com/javafx/25"
+
+		xmlns:fx="http://javafx.com/fxml/1"
+
+		fx:controller="but.info.sae2_12.controllers.MainController">
+
+	<children>
+
+		<fx:include fx:id="upperMenu" source ="UpperMenu.fxml" VBox.vgrow="NEVER"></fx:include>
+		
+		<fx:include fx:id="game" source ="game.fxml" VBox.vgrow="ALWAYS"></fx:include>
+		
+		<fx:include fx:id="bottomPanel" source="BottomController.fxml" VBox.vgrow="NEVER"/>
+		
+
+	</children>
+
+</VBox>
