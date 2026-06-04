@@ -1,5 +1,6 @@
 package but.info.sae2_12.controllers;
 
+import but.info.sae2_12.model.factory.FactoryDoubled;
 import but.info.sae2_12.model.factory.IFactory;
 import but.info.sae2_12.model.state.IState;
 import javafx.fxml.FXML;
@@ -40,6 +41,7 @@ public class GameController {
 
     public void setMainController(MainController mc){
         this.mainController = mc;
+        this.factory=new FactoryDoubled();
     }
     @FXML public void handleNewGame(){
         mainController.getModel().setCurrentState(factory.randomGame());/// recupere le modele du mainController et changer le currenState en generant un etat aleatoire depuis factory
