@@ -58,6 +58,12 @@ public class GameController {
 
         mainController.showCoordinatesProperty().addListener((obs, ancien, nouveau) ->
                 System.out.println("showCoordinates = " + nouveau));
+
+
+        colorPicker1.valueProperty().bindBidirectional(mc.color1Property());
+        colorPicker2.valueProperty().bindBidirectional(mc.color2Property());
+        colorPicker3.valueProperty().bindBidirectional(mc.color3Property());
+
     }
 
 

@@ -62,8 +62,10 @@ public class HexSquare extends Polygon {
         setStroke(Color.BLACK);
         setStrokeWidth(1);
 
-        setFill(baseColor);
+        //setFill(baseColor);/// je remplace setFill(baseColor) par
+        fillProperty().bind(mainController.color1Property()); /// je vois pas comment savoir laquelle est modifié ?
         setStroke(Color.BLACK);
+
         strokeWidthProperty().bind(mainController.borderThicknessProperty());///Modification de l'epaisseur en fonction de la slidebar de gamecontroller
 
         setOnMouseClicked(event -> {

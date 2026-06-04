@@ -15,6 +15,7 @@ import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Window;
 
 public class MainController {
@@ -40,6 +41,17 @@ public class MainController {
     private final ObjectProperty<CoordinateDisplayMode> coordinateMode = new SimpleObjectProperty<>(CoordinateDisplayMode.DOUBLED);
     private final BooleanProperty showCoordinates = new SimpleBooleanProperty(false);
     public ObjectProperty<CoordinateDisplayMode> coordinateModeProperty() { return coordinateMode; }
+
+    //ajout couleur
+    private final ObjectProperty<Color> color1 = new
+            SimpleObjectProperty<>(Color.GRAY);
+    private final ObjectProperty<Color> color2 = new SimpleObjectProperty<>(Color.DARKGRAY);
+    private final ObjectProperty<Color> color3 = new SimpleObjectProperty<>(Color.LIGHTGRAY);
+
+    public ObjectProperty<Color> color1Property() { return color1; }
+    public ObjectProperty<Color> color2Property() { return color2; }
+    public ObjectProperty<Color> color3Property() { return color3; }
+
 
     public void initialize() {
         setModel(new Model(new FactoryDoubled().emptyGame()));
