@@ -15,74 +15,61 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Window;
 
 public class MainController {
 
     private Model model;
-    private Window w;
 
-    // --- Sous-contrôleurs (injectés depuis Main.fxml) ---
-    @FXML
-    private BoardControllers boardController;       // fx:id="board"
-    @FXML
-    private BottomController bottomPanelController;  // fx:id="bottomPanel"
-    @FXML
-    private GameController gameController;           // fx:id="game"
-    @FXML
-    private IAController iAViewController;           // fx:id="iAView"
+    @FXML private BorderPane root;
+    @FXML private BoardControllers boardController;
+    @FXML private BottomController bottomPanelController;
+    @FXML private GameController gameController;
+    @FXML private IAController iAViewController;
+    @FXML private UpperMenuController upperMenuController;
 
-    // --- Propriétés partagées ---
     private final ObjectProperty<InteractionMode> currentMode = new SimpleObjectProperty<>();
     private final BooleanProperty editionMode = new SimpleBooleanProperty(false);
     private final BooleanProperty hasWinner = new SimpleBooleanProperty(false);
 
     public void initialize() {
-        // 1. Le modèle DOIT exister avant les sous-contrôleurs (ils le lisent).
         setModel(new Model(new FactoryDoubled().emptyGame()));
 
-        // 2. On donne le contrôleur principal à chaque sous-contrôleur.
         boardController.setMainController(this);
         bottomPanelController.setMainController(this);
         gameController.setMainController(this);
         iAViewController.setMainController(this);
+        upperMenuController.setMainController(this);
 
-        // 3. PopUp dès qu'un joueur gagne (listener ajouté une seule fois).
         hasWinner.addListener((obs, avant, maintenant) -> {
             if (maintenant) showWinnerPopup();
         });
+
+        model.stateProperty().addListener((obs, oldState, newState) ->
+            iAViewController.rafraichirEvaluation(newState)
+        );
     }
 
-    /**
-     * Définit le modèle et (re)câble les bindings qui en dépendent.
-     * Appelée à l'initialisation, et plus tard à chaque nouvelle partie / chargement.
-     */
     public void setModel(Model m) {
         this.model = m;
 
-        // Mode courant : édition > suppression de ligne > jeu.
         currentMode.bind(Bindings.createObjectBinding(
                 this::computeMode,
                 editionMode,
                 model.stateProperty()
         ));
 
-        // Un gagnant existe-t-il dans l'état courant ?
         hasWinner.bind(Bindings.createBooleanBinding(
                 () -> getState().winner() != null,
                 model.stateProperty()
         ));
     }
 
-    /** Calcul du mode courant selon la priorité du sujet. */
     private InteractionMode computeMode() {
-        if (editionMode.get()) {
-            return new EditionMode(this);
-        } else if (!model.getCurrentState().getLines().isEmpty()) {
-            return new RemoveLineMode(this);
-        } else {
-            return new GameMode(this);
-        }
+        if (editionMode.get())                             return new EditionMode(this);
+        if (!model.getCurrentState().getLines().isEmpty()) return new RemoveLineMode(this);
+        return new GameMode(this);
     }
 
     private void showWinnerPopup() {
@@ -94,29 +81,20 @@ public class MainController {
         alert.showAndWait();
     }
 
-    // --- Accès au modèle et aux propriétés ---
     public Model getModel() { return model; }
-
     public State getState() { return (State) model.stateProperty().get(); }
-
     public void setState(State s) { model.setCurrentState(s); }
-
     public ObjectProperty<InteractionMode> currentModeProperty() { return currentMode; }
-
     public InteractionMode getCurrentMode() { return currentMode.get(); }
-
     public BooleanProperty editionModeProperty() { return editionMode; }
-
     public BooleanProperty hasWinnerProperty() { return hasWinner; }
-
-    // --- Accès aux sous-contrôleurs ---
     public BoardControllers getBoardController() { return boardController; }
-
     public BottomController getBottomController() { return bottomPanelController; }
-
     public GameController getGameController() { return gameController; }
-
     public IAController getIAController() { return iAViewController; }
 
-    public Window getWindow() { return w; }
+    public Window getWindow() {
+        if (root != null && root.getScene() != null) return root.getScene().getWindow();
+        return null;
+    }
 }

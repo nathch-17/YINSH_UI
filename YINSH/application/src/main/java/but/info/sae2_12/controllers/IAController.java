@@ -26,15 +26,9 @@ public class IAController {
     
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
-        this.miniMax = new MiniMax(); 
+        this.miniMax = new MiniMax();
+
         initialiserLiaisons();
-        if (mainController.stateProperty() != null) {
-            mainController.stateProperty().addListener((observable, oldState, newState) -> {
-                if (newState != null) {
-                    rafraichirEvaluation(newState);
-                }
-            });
-        }
     }
 
     

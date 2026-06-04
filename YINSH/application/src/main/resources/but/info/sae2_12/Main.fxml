@@ -21,9 +21,7 @@
     </top>
     
     <center>
-    	<AnchorPane style="-fx-background-color: #cccccc;">
-  			<Label text="Plateau (à venir)" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"/>
-		</AnchorPane>
+    	<fx:include fx:id="board" source="Board.fxml">
     </center>
     
     
