@@ -9,7 +9,7 @@ public class MainController {
 	Window w;
 	
 	public State getState() {
-		return null;
+		return this.state;
 	}
 	public void setState(State s) {
 		this.state=s;

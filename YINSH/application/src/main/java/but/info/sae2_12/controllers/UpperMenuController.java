@@ -37,7 +37,7 @@ public class UpperMenuController {
 
         VBox content = new VBox(8);
         content.getChildren().addAll(
-            new Label("Projet realise par :"),
+            new Label("Projet réalisé par :"),
             new Label("Louis Fontaine"),
             new Label("Armand Pivert"),
             new Label("Nathan Chaignon"),
@@ -70,19 +70,22 @@ public class UpperMenuController {
             } else {
                 out.println("true");
             }
-            for (int i = 0; i < state.board().keySet().size(); i++) {
-                Coordinate coord = (Coordinate) state.board().keySet().toArray()[i];
+            for (Coordinate coord : state.board().keySet()) {
                 Token t = state.board().get(coord);
-                if (t == null) continue;
-                CoordinateCube c = (CoordinateCube) coord;
-                String type;
-                if (t instanceof Ring) {
-                    type = "R";
-                } else {
-                    type = "P";
+                if (t != null) {
+                    CoordinateCube c = (CoordinateCube) coord;
+
+                    String type;
+                    if (t instanceof Ring) {
+                        type = "R";
+                    } else {
+                        type = "P";
+                    }
+
+                    String team = t.getTeam().name();
+                    out.println(c.getQ() + " " + c.getR() + " " + c.getS() + " " + type + " " + team);
                 }
-                String team = t.getTeam().name();
-                out.println(c.getQ() + " " + c.getR() + " " + c.getS() + " " + type + " " + team);
+            
             }
         } catch (IOException e) {
             afficherErreur("Erreur lors de la sauvegarde.");
@@ -94,46 +97,47 @@ public class UpperMenuController {
         FileChooser fc = new FileChooser();
         fc.setTitle("Charger une partie");
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers YINSH (*.yns)", "*.yns"));
-        File fichier = fc.showOpenDialog(mainController.getWindow());
-        if (fichier == null) return;
+        File fichier = fc.showOpenDialog(null);
 
-        try (Scanner in = new Scanner(fichier)) {
-            if (!in.nextLine().equals(MAGIC)) {
-                afficherErreur("Format de fichier invalide");
-            } else {
-                Team turn = Team.valueOf(in.nextLine());
-                boolean hasLines = in.nextLine().equals("true");
+        if (fichier != null) {
+            try (Scanner in = new Scanner(fichier)) {
+                if (!in.nextLine().equals(MAGIC)) {
+                    afficherErreur("Format de fichier invalide");
+                } else {
+                    Team turn = Team.valueOf(in.nextLine());
+                    boolean hasLines = in.nextLine().equals("true");
 
-                Map<Coordinate, Token> board = new HashMap<>();
-                for (Coordinate c : mainController.getState().board().keySet())
-                    board.put(c, null);
+                    Map<Coordinate, Token> board = new HashMap<>();
+                    for (Coordinate c : mainController.getState().board().keySet())
+                        board.put(c, null);
 
-                while (in.hasNextLine()) {
-                    String[] parts = in.nextLine().split(" ");
-                    Coordinate coord = new CoordinateCube(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
-                    Team team = Team.valueOf(parts[4]);
+                    while (in.hasNextLine()) {
+                        String[] parts = in.nextLine().split(" ");
+                        Coordinate coord = new CoordinateCube(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+                        Team team = Team.valueOf(parts[4]);
 
-                    Token token;
-                    if (parts[3].equals("R")) {
-                        token = new Ring(team);
-                    } else {
-                        token = new Pawn(team);
+                        Token token;
+                        if (parts[3].equals("R")) {
+                            token = new Ring(team);
+                        } else {
+                            token = new Pawn(team);
+                        }
+
+                        board.put(coord, token);
                     }
 
-                    board.put(coord, token);
-                }
+                    List<Set<Coordinate>> lines;
+                    if (hasLines) {
+                        lines = IState.getPawnsLines(board);
+                    } else {
+                        lines = new ArrayList<>();
+                    }
 
-                List<Set<Coordinate>> lines;
-                if (hasLines) {
-                    lines = IState.getPawnsLines(board);
-                } else {
-                    lines = new ArrayList<>();
+                    mainController.setState(new State(board, turn, lines));
                 }
-
-                mainController.setState(new State(board, turn, lines));
+            } catch (IOException e) {
+                afficherErreur("Erreur lors du chargement.");
             }
-        } catch (IOException e) {
-            afficherErreur("Erreur lors du chargement.");
         }
     }
     
