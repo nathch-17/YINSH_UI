@@ -1,5 +1,7 @@
 package but.info.sae2_12.controllers;
 
+import but.info.sae2_12.model.Team;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -13,13 +15,11 @@ public class BottomController {
 
     private MainController mainController;
 
-    public void setMainController1(MainController mainController) {
-        this.mainController = mainController;
-    }
+    
 
     @FXML
     public void initialize() {
-        statusPlayerLabel.setText("Noir");
+        statusPlayerLabel.setText("Blanc");
         statusModeLabel.setText("Déplacement");
     }
 
@@ -31,8 +31,23 @@ public class BottomController {
         statusModeLabel.setText(mode);
     }
 
-	public void setMainController(MainController mainController2) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+
+        
+        mainController.getModel().stateProperty().addListener((obs, oldState, newState) -> {
+            if (newState != null) {
+                Team turn = newState.turn();
+                String playerName = (turn == Team.BLACK) ? "Noir" : "Blanc";
+                Platform.runLater(() -> statusPlayerLabel.setText(playerName));
+            }
+        });
+
+       
+        mainController.currentModeProperty().addListener((obs, oldMode, newMode) -> {
+            if (newMode != null) {
+                Platform.runLater(() -> statusModeLabel.setText(newMode.toString()));
+            }
+        });
+    }
 }
