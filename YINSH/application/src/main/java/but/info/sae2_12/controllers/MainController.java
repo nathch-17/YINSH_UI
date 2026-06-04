@@ -21,7 +21,7 @@ public class MainController {
     @FXML
     private BottomController bottomPanelController;
 
-    @FXML
+    
     public void initialize() {
         bottomPanelController.setMainController(this);
     }
