@@ -79,8 +79,8 @@ public class GameController {
 
     public void initialize(){
         chkEditMode.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-           vboxTypeTeam.setDisable(!newValue);
-       }));
+            vboxTypeTeam.setDisable(!newValue);
+        }));
 
 
     }
