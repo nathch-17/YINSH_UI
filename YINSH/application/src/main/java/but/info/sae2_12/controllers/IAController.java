@@ -40,13 +40,24 @@ public class IAController {
         txtMobilityWeight.setText("0.5");
     }
 
-   
     public void rafraichirEvaluation(IState currentState) {
-        double score = miniMax.evaluate(currentState, Team.BLACK);
-        double maxScore = miniMax.getWinScore();
-        double pourcentage = (score + maxScore) / (2 * maxScore);
-        pourcentage = Math.max(0.0, Math.min(1.0, pourcentage));
-        progressEvaluation.setProgress(pourcentage);
+        Platform.runLater(() -> {
+            if (currentState == null) return;
+            double score = miniMax.evaluate(currentState, Team.BLACK);
+            double winScore = miniMax.getWinScore();
+            double pourcentage;
+            if (score >= winScore) {
+                pourcentage = 1.0;
+            } else if (score <= -winScore) {
+                pourcentage = 0.0;
+            } 
+            else {
+                double maxTactique = 500.0; 
+                pourcentage = (score + maxTactique) / (2 * maxTactique);
+                pourcentage = Math.max(0.05, Math.min(0.95, pourcentage));
+            }
+            progressEvaluation.setProgress(pourcentage);
+        });
     }
 
    
