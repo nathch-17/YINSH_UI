@@ -90,7 +90,6 @@ public class MiniMax {
                 }
             }
         }
-
         return bestMove;
     }
 
@@ -109,13 +108,10 @@ public class MiniMax {
         if (depth == 0 || isTerminal(state)) {
             return evaluate(state, aiTeam);
         }
-
         if (!state.getLines().isEmpty()) {
             return handleLineRemoval(state, depth, alpha, beta, maximizing, aiTeam);
         }
-
         Team currentTeam = state.turn();
-
         if (maximizing) {
             double value = Double.NEGATIVE_INFINITY;
             for (Coordinate ring : state.rings().get(currentTeam)) {
@@ -152,7 +148,6 @@ public class MiniMax {
         List<Set<Coordinate>> lines = state.getLines();
         Set<Coordinate> line = lines.get(0); // On traite la première ligne disponible
         Team currentTeam = state.turn();
-
         if (maximizing) {
             double value = Double.NEGATIVE_INFINITY;
             for (Coordinate ring : state.rings().get(currentTeam)) {
@@ -189,24 +184,19 @@ public class MiniMax {
      */
     public double evaluate(IState state, Team aiTeam) {
         Team opponent = aiTeam.other();
-
         int aiRings = state.rings().get(aiTeam).size();
         int opponentRings = state.rings().get(opponent).size();
-
         if (aiRings <= 2) return WIN_SCORE.get();      // L'IA a retiré 3 anneaux 
         if (opponentRings <= 2) return -WIN_SCORE.get();     // L'adversaire a retiré 3 anneaux 
-
         double score = 0.0;
         score += (INITIAL_RINGS.get() - aiRings) * RING_REMOVED_WEIGHT.get();
         score -= (INITIAL_RINGS.get() - opponentRings) * RING_REMOVED_WEIGHT.get();
-
         // Pions
         for (var entry : state.board().entrySet()) {
             if (entry.getValue() instanceof Pawn pawn) {
                 score += (pawn.getTeam() == aiTeam) ? PAWN_WEIGHT.get() : -PAWN_WEIGHT.get();
             }
         }
-
         // Lignes en cours
         score += state.getLines().stream()
                 .filter(line -> line.stream().allMatch(c ->
@@ -227,7 +217,6 @@ public class MiniMax {
                 .sum();
 
         score += (aiMobility - oppMobility) * 0.5;
-
         return score;
     }
     /**
@@ -240,13 +229,11 @@ public class MiniMax {
         // Un joueur a retiré 3 anneaux
         if (state.rings().get(Team.WHITE).size() <= 2) return true;
         if (state.rings().get(Team.BLACK).size() <= 2) return true;
-
         // Match nul : aucun anneau du joueur courant ne peut bouger
         Team current = state.turn();
         return state.rings().get(current).stream()
                 .allMatch(r -> state.availableMoves(r).isEmpty());
     }
-
     /**
      * Applique un déplacement d'anneau de {@code from} vers {@code to} et retourne
      * le nouvel état. Renvoie {@code null} en cas d'exception.
@@ -261,5 +248,38 @@ public class MiniMax {
         } catch (Exception e) {
             return null;
         }
+    }
+    /**
+     * Permet au contrôleur d'accéder à la propriété de score de victoire.
+     * En JavaFX, retourner la propriété elle-même permet de lier un TextField de façon dynamique.
+     */
+    public SimpleDoubleProperty winScoreProperty() {
+        return WIN_SCORE;
+    }
+
+    /**
+     * Permet d'accéder à la propriété du poids d'un anneau retiré.
+     */
+    public SimpleDoubleProperty ringRemovedWeightProperty() {
+        return RING_REMOVED_WEIGHT;
+    }
+
+    /**
+     * Permet d'accéder à la propriété du poids d'un pion sur le plateau.
+     */
+    public SimpleDoubleProperty pawnWeightProperty() {
+        return PAWN_WEIGHT;
+    }
+
+    /**
+     * Permet d'accéder à la propriété du poids d'une ligne de 4 pions.
+     */
+    public SimpleDoubleProperty nearLineWeightProperty() {
+        return NEAR_LINE_WEIGHT;
+    }
+    
+    // Getters simples requis pour récupérer les valeurs numériques brutes
+    public double getWinScore() {
+        return WIN_SCORE.get();
     }
 }
