@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<MenuBar fx:id="UpperMenu"
+         xmlns:fx="http://javafx.com/fxml/1"
+         xmlns="http://javafx.com/javafx/8"
+         fx:controller="but.info.sae2_12.controllers.UpperMenuController">
+  <menus>
+    <Menu mnemonicParsing="false" text="À propos">
+      <items>
+        <MenuItem mnemonicParsing="false" text="À propos" onAction="#onAPropos"/>
+      </items>
+    </Menu>
+    <Menu fx:id="MenuSaveLoad" mnemonicParsing="false" text="Charger/Sauvegarder">
+      <items>
+        <MenuItem fx:id="Load" mnemonicParsing="false" text="Charger" onAction="#onCharger"/>
+        <MenuItem fx:id="Save" mnemonicParsing="false" text="Sauvegarder" onAction="#onSauvegarder"/>
+      </items>
+    </Menu>
+  </menus>
+</MenuBar>
