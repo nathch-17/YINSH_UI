@@ -62,7 +62,7 @@ public class IAController {
      */
     @FXML
     private void onSuggererCoup(ActionEvent event) {
-        IState etatActuel = mainController.getCurrentState();
+        IState etatActuel = mainController.getState();
         Team joueurActuel = etatActuel.turn();
         MinimaxAI iaAide = new MinimaxAI(joueurActuel, 3);
         Action meilleurCoup = iaAide.chooseMove(etatActuel);
