@@ -119,18 +119,4 @@ public class MainController {
     public IAController getIAController() { return iAViewController; }
 
     public Window getWindow() { return w; }
-
-    private final ObjectProperty<IState> state = new SimpleObjectProperty<>();
-
-    public void updateGameState(IState newState) {
-        this.state.set(newState);
-    }
-
-    public ObjectProperty<IState> stateProperty() {
-        return state;
-    }
-
-    public IState getState() {
-        return state.get();
-    }
 }
