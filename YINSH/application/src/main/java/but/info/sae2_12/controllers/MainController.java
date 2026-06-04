@@ -1,8 +1,9 @@
+
+
 package but.info.sae2_12.controllers;
 
 import but.info.sae2_12.model.Model;
 import but.info.sae2_12.model.Team;
-import but.info.sae2_12.model.factory.AbstractFactory;
 import but.info.sae2_12.model.factory.FactoryDoubled;
 import but.info.sae2_12.model.state.IState;
 import but.info.sae2_12.model.state.State;
@@ -22,24 +23,15 @@ public class MainController {
 
     @FXML
     private BottomController bottomPanelController;
-	@FXML
-	private GameController gameController;
+    @FXML
+    private GameController gameController;
+    @FXML
+    private IAController iAViewController;
 
     public void initialize() {
-
-		IState initialState = new FactoryDoubled().randomGame(); /// Modèle de base qui sera pas utilisé
-		model = new Model(initialState);
-		bottomPanelController.setMainController(this);
-		gameController.setMainController(this);
-
-
-
-
-
-    }
-
-    public void setModel(Model m) {
-        this.model = m;
+    	iAViewController.setMainController(this);
+        IState initialState = new FactoryDoubled().randomGame();
+        model = new Model(initialState);
 
         hasWinner.bind(Bindings.createBooleanBinding(
                 () -> ((State) model.stateProperty().get()).winner() != null,
@@ -49,11 +41,10 @@ public class MainController {
         hasWinner.addListener(obs -> {
             if (hasWinner.get()) showWinnerPopup();
         });
-    }
 
-	public Model getModel(){
-		return model;
-	}
+        bottomPanelController.setMainController(this);
+        gameController.setMainController(this);
+    }
 
     private void showWinnerPopup() {
         Team winner = getState().winner();
@@ -68,6 +59,10 @@ public class MainController {
         return hasWinner;
     }
 
+    public Model getModel() {
+        return model;
+    }
+
     public State getState() {
         return (State) model.stateProperty().get();
     }
@@ -79,7 +74,5 @@ public class MainController {
     public Window getWindow() {
         return w;
     }
-
-
-
 }
+

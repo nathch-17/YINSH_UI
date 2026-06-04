@@ -6,25 +6,40 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" 
+<BorderPane prefHeight="600.0" prefWidth="900.0" 
       xmlns="http://javafx.com/javafx/25" 
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="but.info.sae2_12.controller.MainController">
-
-  <children>
+      fx:controller="but.info.sae2_12.controllers.MainController">
 
 
-    <!-- Zone centrale (à compléter par tes camarades) -->
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" 
-                prefHeight="-1.0" prefWidth="-1.0" 
-                VBox.vgrow="ALWAYS">
-    </AnchorPane>
 
-    <!-- Barre de statut du bas -->
-    <fx:include fx:id="bottomPanel" source="BottomController.fxml" VBox.vgrow="NEVER"/>
-
-  </children>
-</VBox>
+	<top>
+    	<fx:include fx:id="upperMenu" source ="UpperMenu.fxml"/>
+    </top>
+    
+    <center>
+    	<AnchorPane style="-fx-background-color: #cccccc;">
+  			<Label text="Plateau (à venir)" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10"/>
+		</AnchorPane>
+    </center>
+    
+    
+    <left>
+    	<fx:include fx:id="game" source ="game.fxml" />
+    </left>
+	
+	
+    <right>
+    	<fx:include fx:id="iAView" source ="IAView.fxml" />
+    </right>
+    
+    <bottom>
+    <fx:include fx:id="bottomPanel" source="BottomController.fxml" />
+    
+    </bottom>
+    
+  
+</BorderPane>
