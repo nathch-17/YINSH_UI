@@ -1,4 +1,4 @@
-package but.info.sae2_12.controller;
+package but.info.sae2_12.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,7 +13,7 @@ public class BottomController {
 
     private MainController mainController;
 
-    public void setMainController(MainController mainController) {
+    public void setMainController1(MainController mainController) {
         this.mainController = mainController;
     }
 
@@ -30,4 +30,9 @@ public class BottomController {
     public void updateMode(String mode) {
         statusModeLabel.setText(mode);
     }
+
+	public void setMainController(MainController mainController2) {
+		// TODO Auto-generated method stub
+		
+	}
 }

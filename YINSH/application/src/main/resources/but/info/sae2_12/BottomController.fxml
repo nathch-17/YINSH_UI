@@ -8,7 +8,7 @@
 <HBox
     xmlns="http://javafx.com/javafx/21"
     xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="but.info.sae2_12.controller.BottomController"
+    fx:controller="but.info.sae2_12.controllers.BottomController"
     spacing="16"
     alignment="CENTER_LEFT"
     style="-fx-padding: 4 12; -fx-background-color: derive(-fx-background, -10%);
