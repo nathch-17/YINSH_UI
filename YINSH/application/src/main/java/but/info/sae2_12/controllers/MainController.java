@@ -5,10 +5,17 @@ import but.info.sae2_12.mode.GameMode;
 import but.info.sae2_12.mode.InteractionMode;
 import but.info.sae2_12.mode.RemoveLineMode;
 import but.info.sae2_12.model.Model;
+import but.info.sae2_12.model.Team;
 import but.info.sae2_12.model.factory.FactoryDoubled;
 import but.info.sae2_12.model.factory.IFactory;
 import but.info.sae2_12.model.state.*;
+import but.info.sae2_12.model.tokens.Pawn;
+import but.info.sae2_12.model.tokens.Ring;
+import coordinates.CoordinateDoubled;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.stage.Window;
@@ -23,14 +30,28 @@ public class MainController {
 	@FXML
 	private BoardControllers boardController;
 
-	public void initialize(){
+	public void initialize() {
 		IFactory factory = new FactoryDoubled();
-		IState base = factory.doubleLineStateTest();   // un plateau qui contient des lignes
-// On recrée l'état en y stockant les lignes calculées (sinon removeLine refuse) :
-		this.model = new Model(new State(base.board(), base.turn(), IState.getPawnsLines(base.board())));
+		this.model = new Model(factory.emptyState());   // plateau vide
 		boardController.setMainController(this);
-		currentMode.set(new RemoveLineMode(this));   // test provisoire
 
+		currentMode.bind(Bindings.createObjectBinding(
+				this::computeMode,
+				editionMode,
+				model.stateProperty()
+		));
+	// construit le terrain + branche le listener
+
+		// On place une ligne de 5 pions blancs alignés + un anneau blanc, pour tester.
+		model.toggleToken(new CoordinateDoubled(4, 0), Pawn.class, Team.WHITE);
+		model.toggleToken(new CoordinateDoubled(4, 2), Pawn.class, Team.WHITE);
+		model.toggleToken(new CoordinateDoubled(4, 4), Pawn.class, Team.WHITE);
+		model.toggleToken(new CoordinateDoubled(4, 6), Pawn.class, Team.WHITE);
+		model.toggleToken(new CoordinateDoubled(4, 8), Pawn.class, Team.WHITE);
+		model.toggleToken(new CoordinateDoubled(4, 10), Ring.class, Team.WHITE);
+		// test provisoire
+
+		System.out.println("Nombre de lignes détectées : " + model.getPawnsLines().size());
 	}
 
 	public Model getModel() {
@@ -64,5 +85,22 @@ public class MainController {
 
 	public ObjectProperty<InteractionMode> currentModeProperty() {
 		return currentMode;
+	}
+
+	private final BooleanProperty editionMode = new SimpleBooleanProperty(true);
+
+	public BooleanProperty editionModeProperty(){
+		return editionMode;
+	}
+
+	//calcul mode actuel selon priorité
+	private InteractionMode computeMode(){
+		if (editionMode.get()){
+			return new EditionMode(this);
+		}else if (!model.getCurrentState().getLines().isEmpty()){
+			return new RemoveLineMode(this);
+		}else {
+			return new GameMode(this);
+		}
 	}
 }
