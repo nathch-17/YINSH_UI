@@ -1,14 +1,8 @@
 package but.info.sae2_12.controllers;
 
-import but.info.sae2_12.CoordinateDisplayMode;
-import but.info.sae2_12.model.Team;
 import but.info.sae2_12.model.factory.FactoryDoubled;
 import but.info.sae2_12.model.factory.IFactory;
 import but.info.sae2_12.model.state.IState;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -51,18 +45,7 @@ public class GameController {
     public void setMainController(MainController mc){
         this.mainController = mc;
         this.factory=new FactoryDoubled();
-        mainController.showCoordinatesProperty().bind(chkShowCoordinates.selectedProperty());
-        listViewCoordinateMode.getItems().addAll(CoordinateDisplayMode.values());
-        listViewCoordinateMode.getSelectionModel().select(CoordinateDisplayMode.DOUBLED);
-        mainController.coordinateModeProperty().bind(listViewCoordinateMode.getSelectionModel().selectedItemProperty());
-
-        mainController.showCoordinatesProperty().addListener((obs, ancien, nouveau) ->
-                System.out.println("showCoordinates = " + nouveau));
     }
-
-
-
-
 
     @FXML public void handleNewGame(){
         mainController.getModel().setCurrentState(factory.randomGame());/// recupere le modele du mainController et changer le currenState en generant un etat aleatoire depuis factory
@@ -91,33 +74,8 @@ public class GameController {
            vboxTypeTeam.setDisable(!newValue);
        }));
 
-        sliderBorderThickness.setMin(1);
-        sliderBorderThickness.setMax(5);
-        sliderBorderThickness.setValue(1);
-
-
-
-
 
     }
-
-    public Team getSelectedTeam(){
-        return radioBlack.isSelected() ? Team.BLACK : Team.WHITE;
-    }
-
-    public boolean isRingsSelected(){
-        return radioRing.isSelected();
-    }
-
-    public void setMainController(MainController mc){
-        this.mainController = mc;
-        this.factory=new FactoryDoubled();
-
-
-        chkEditMode.selectedProperty().bindBidirectional(mc.editionModeProperty());
-        sliderBorderThickness.valueProperty().bindBidirectional(mc.borderThicknessProperty());
-    }
-
 
 
 

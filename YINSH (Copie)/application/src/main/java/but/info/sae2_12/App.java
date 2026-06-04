@@ -14,7 +14,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("Main"), 1700, 750); // un peu plus grand pour voir tout le plateau
+        scene = new Scene(loadFXML("Main"), 900, 750); // un peu plus grand pour voir tout le plateau
         stage.setTitle("YINSH");
         stage.setScene(scene);
         stage.show();
