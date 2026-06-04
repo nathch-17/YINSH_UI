@@ -27,4 +27,8 @@ public class Move extends Action {
     public void setFrom(Coordinate from) {
         this.from = from;
     }
+    @Override
+    public String toString() {
+        return "Déplacement de l'anneau de la case " + this.from + " vers la case " + this.to + ".";
+    }
 }

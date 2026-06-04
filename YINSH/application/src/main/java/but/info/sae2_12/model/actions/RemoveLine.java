@@ -28,4 +28,9 @@ public class RemoveLine extends Action {
     public void setRing(Coordinate ring) {
         this.ring = ring;
     }
+    @Override
+    public String toString() {
+        return "Retrait de la ligne de pions située aux coordonnées : " + this.line 
+                + " et suppression définitive de l'anneau en " + this.ring + ".";
+    }
 }
