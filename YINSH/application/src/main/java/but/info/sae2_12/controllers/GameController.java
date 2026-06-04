@@ -4,6 +4,7 @@ import but.info.sae2_12.model.factory.IFactory;
 import but.info.sae2_12.model.state.IState;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 public class GameController {
     private IFactory factory;
@@ -22,8 +23,10 @@ public class GameController {
     @FXML private RadioButton radioRing;
     @FXML private RadioButton radioBlack;
     @FXML private RadioButton radioWhite;
-    private ToggleGroup toggleGroupType;  // Pas @FXML (créé en code)
-    private ToggleGroup toggleGroupTeam;  // Pas @FXML
+
+
+    @FXML private VBox vboxTypeTeam;
+
 
 
     @FXML private ColorPicker colorPicker1;
@@ -41,6 +44,7 @@ public class GameController {
     public void setMainController(MainController mc){
         this.mainController = mc;
     }
+
     @FXML public void handleNewGame(){
         mainController.getModel().setCurrentState(factory.randomGame());/// recupere le modele du mainController et changer le currenState en generant un etat aleatoire depuis factory
     }
@@ -62,6 +66,21 @@ public class GameController {
 
         mainController.getModel().setCurrentState(factory.doubleLineStateTest());
     }
+
+    public void initialize(){
+        radioPion.setUserData("Pawn");
+        radioRing.setUserData("Ring");
+        radioBlack.setUserData("BLACK");
+        radioWhite.setUserData("WHITE");
+
+       chkEditMode.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+           vboxTypeTeam.setDisable(!newValue);
+       }));
+
+
+    }
+
+
 
 
 

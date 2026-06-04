@@ -37,54 +37,58 @@
                         <Font size="14.0" />
                      </font>
                   </CheckBox>
-                  <Label text="Type : ">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                  </Label>
-                  <RadioButton fx:id="radioPion" mnemonicParsing="false" selected="true" text="Pion">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="typeToggleGroup" />
-                     </toggleGroup>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="2.0" left="20.0" top="2.0" />
-                     </padding>
-                  </RadioButton>
-                  <RadioButton fx:id="radioRing" mnemonicParsing="false" text="Anneau" toggleGroup="$typeToggleGroup">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="2.0" left="20.0" top="2.0" />
-                     </padding>
-                  </RadioButton>
-                  <Label text="Equipe : ">
-                     <padding>
-                        <Insets top="5.0" />
-                     </padding>
-                  </Label>
-                  <RadioButton fx:id="radioBlack" mnemonicParsing="false" selected="true" text="Noir">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="teamToggleGroup" />
-                     </toggleGroup>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="2.0" left="20.0" top="2.0" />
-                     </padding>
-                  </RadioButton>
-                  <RadioButton fx:id="radioWhite" mnemonicParsing="false" text="Blanc" toggleGroup="$teamToggleGroup">
-                     <padding>
-                        <Insets bottom="2.0" left="20.0" top="2.0" />
-                     </padding>
-                  </RadioButton>
+                  <VBox id="vboxTypeTeam" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Type : ">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </Label>
+                        <RadioButton fx:id="radioPion" mnemonicParsing="false" selected="true" text="Pion">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="typeToggleGroup" />
+                           </toggleGroup>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="20.0" top="2.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioRing" mnemonicParsing="false" text="Anneau" toggleGroup="$typeToggleGroup">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="20.0" top="2.0" />
+                           </padding>
+                        </RadioButton>
+                        <Label text="Equipe : ">
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </Label>
+                        <RadioButton fx:id="radioBlack" mnemonicParsing="false" selected="true" text="Noir">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="teamToggleGroup" />
+                           </toggleGroup>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="2.0" left="20.0" top="2.0" />
+                           </padding>
+                        </RadioButton>
+                        <RadioButton fx:id="radioWhite" mnemonicParsing="false" text="Blanc" toggleGroup="$teamToggleGroup">
+                           <padding>
+                              <Insets bottom="2.0" left="20.0" top="2.0" />
+                           </padding>
+                        </RadioButton>
+                     </children>
+                  </VBox>
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
