@@ -5,25 +5,43 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 
-<HBox
-    xmlns="http://javafx.com/javafx/21"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="but.info.sae2_12.controllers.BottomController"
-    spacing="16"
-    alignment="CENTER_LEFT"
-    style="-fx-padding: 4 12; -fx-background-color: derive(-fx-background, -10%);
+<HBox xmlns="http://javafx.com/javafx/21"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="but.info.sae2_12.controllers.BottomController"
+	spacing="16" alignment="CENTER_LEFT"
+	style="-fx-padding: 4 12; -fx-background-color: derive(-fx-background, -10%);
            -fx-border-color: derive(-fx-background, -20%); -fx-border-width: 1 0 0 0;">
 
-    <Label text="Tour :" style="-fx-text-fill: gray;"/>
-    <Label fx:id="statusPlayerLabel" text="Noir" style="-fx-font-weight: bold;"/>
+	<Label text="Tour :" style="-fx-text-fill: gray;" />
+	<Label fx:id="statusPlayerLabel" text="Noir"
+		style="-fx-font-weight: bold;" />
 
-    <Separator orientation="VERTICAL"/>
+	<Separator orientation="VERTICAL" />
 
-    <Label text="Mode :" style="-fx-text-fill: gray;"/>
-    <Label fx:id="statusModeLabel" text="Déplacement"/>
+	<Label text=" Anneaux :" style="-fx-text-fill: gray;" />
+	<Label fx:id="blackRingsLabel" text="5"
+		style="-fx-font-weight: bold;" />
+	<Label text="Pions :" style="-fx-text-fill: gray;" />
+	<Label fx:id="blackPawnsLabel" text="0"
+		style="-fx-font-weight: bold;" />
 
-    <Region HBox.hgrow="ALWAYS"/>
+	<Separator orientation="VERTICAL" />
 
-    <Label text="YINSH — SAE 2.1&amp;2" style="-fx-text-fill: gray;"/>
+	<Label text=" Anneaux :" style="-fx-text-fill: gray;" />
+	<Label fx:id="whiteRingsLabel" text="5"
+		style="-fx-font-weight: bold;" />
+	<Label text="Pions :" style="-fx-text-fill: gray;" />
+	<Label fx:id="whitePawnsLabel" text="0"
+		style="-fx-font-weight: bold;" />
+
+	<Separator orientation="VERTICAL" />
+
+	<Label text="Mode :" style="-fx-text-fill: gray;" />
+	<Label fx:id="statusModeLabel" text="Déplacement" />
+
+	<Region HBox.hgrow="ALWAYS" />
+
+	<Label text="YINSH — SAE 2.1&amp;2" style="-fx-text-fill: gray;" />
+
 
 </HBox>
