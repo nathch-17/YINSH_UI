@@ -1,6 +1,6 @@
 
 # 1. Fichiers compilés Java et archives
-
+*.metadata
 *.class
 *.log
 *.jar
@@ -58,3 +58,4 @@ Desktop.ini
 
 # Linux
 *~
+
