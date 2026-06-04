@@ -59,7 +59,7 @@ public class HexSquare extends Polygon {
 
         setFill(baseColor);
         setStroke(Color.BLACK);
-        setStrokeWidth(1);
+        strokeWidthProperty().bind(mainController.borderThicknessProperty());///Modification de l'epaisseur en fonction de la slidebar de gamecontroller
 
         setOnMouseClicked(event -> {
             if (mainController.getCurrentMode() != null) {
@@ -131,7 +131,7 @@ public class HexSquare extends Polygon {
     /** anneau. */
     private Shape createRing(Team team) {
         Circle c = new Circle(centreX, centreY, LARGEUR / 3);
-        c.setFill(Color.TRANSPARENT);     // anneau
+        c.setFill(Color.TRANSPARENT);    // anneau
         c.setStroke(team.getColor());
         c.setStrokeWidth(4);
         c.setMouseTransparent(true);

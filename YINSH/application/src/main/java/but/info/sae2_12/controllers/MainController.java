@@ -9,10 +9,7 @@ import but.info.sae2_12.model.Team;
 import but.info.sae2_12.model.factory.FactoryDoubled;
 import but.info.sae2_12.model.state.State;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
@@ -21,6 +18,11 @@ import javafx.stage.Window;
 public class MainController {
 
     private Model model;
+    private final IntegerProperty borderThickness = new SimpleIntegerProperty(1);
+
+    public IntegerProperty borderThicknessProperty(){
+        return borderThickness;
+    }
 
     @FXML private BorderPane root;
     @FXML private BoardControllers boardController;
