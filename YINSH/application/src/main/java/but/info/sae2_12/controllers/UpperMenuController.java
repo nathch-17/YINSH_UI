@@ -15,6 +15,7 @@ public class UpperMenuController {
         this.mainController = mainController;
     }
 
+    private static final String MAGIC = "SAE212";
     
     @FXML
     private void onAPropos(ActionEvent event) {
@@ -36,6 +37,13 @@ public class UpperMenuController {
 
         alert.getDialogPane().setContent(content);
         alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+    }
+    
+    private void afficherErreur(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erreur");
+        alert.setContentText(message);
         alert.showAndWait();
     }
 
