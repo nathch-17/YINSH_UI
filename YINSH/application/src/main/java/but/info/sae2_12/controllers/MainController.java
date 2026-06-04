@@ -2,6 +2,9 @@ package but.info.sae2_12.controllers;
 
 import but.info.sae2_12.model.Model;
 import but.info.sae2_12.model.Team;
+import but.info.sae2_12.model.factory.AbstractFactory;
+import but.info.sae2_12.model.factory.FactoryDoubled;
+import but.info.sae2_12.model.state.IState;
 import but.info.sae2_12.model.state.State;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -12,16 +15,27 @@ import javafx.stage.Window;
 
 public class MainController {
 
-    Model model;
-    Window w;
+    private Model model;
+    private Window w;
 
     private final BooleanProperty hasWinner = new SimpleBooleanProperty(false);
 
     @FXML
     private BottomController bottomPanelController;
+	@FXML
+	private GameController gameController;
 
     public void initialize() {
-        bottomPanelController.setMainController(this);
+
+		IState initialState = new FactoryDoubled().randomGame(); /// Modèle de base qui sera pas utilisé
+		model = new Model(initialState);
+		bottomPanelController.setMainController(this);
+		gameController.setMainController(this);
+
+
+
+
+
     }
 
     public void setModel(Model m) {
@@ -36,6 +50,10 @@ public class MainController {
             if (hasWinner.get()) showWinnerPopup();
         });
     }
+
+	public Model getModel(){
+		return model;
+	}
 
     private void showWinnerPopup() {
         Team winner = getState().winner();
@@ -61,4 +79,7 @@ public class MainController {
     public Window getWindow() {
         return w;
     }
+
+
+
 }
