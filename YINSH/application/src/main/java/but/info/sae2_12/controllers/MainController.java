@@ -29,6 +29,8 @@ public class MainController {
     private BottomController bottomPanelController;  // fx:id="bottomPanel"
     @FXML
     private GameController gameController;           // fx:id="game"
+    @FXML
+    private IAController iAViewController;           // fx:id="iAView"
 
     // --- Propriétés partagées ---
     private final ObjectProperty<InteractionMode> currentMode = new SimpleObjectProperty<>();
@@ -36,10 +38,14 @@ public class MainController {
     private final BooleanProperty hasWinner = new SimpleBooleanProperty(false);
 
     public void initialize() {
+        // 1. Le modèle DOIT exister avant les sous-contrôleurs (ils le lisent).
         setModel(new Model(new FactoryDoubled().emptyGame()));
+
+        // 2. On donne le contrôleur principal à chaque sous-contrôleur.
         boardController.setMainController(this);
         bottomPanelController.setMainController(this);
         gameController.setMainController(this);
+        iAViewController.setMainController(this);
 
         // 3. PopUp dès qu'un joueur gagne (listener ajouté une seule fois).
         hasWinner.addListener((obs, avant, maintenant) -> {
@@ -109,6 +115,8 @@ public class MainController {
     public BottomController getBottomController() { return bottomPanelController; }
 
     public GameController getGameController() { return gameController; }
+
+    public IAController getIAController() { return iAViewController; }
 
     public Window getWindow() { return w; }
 }
